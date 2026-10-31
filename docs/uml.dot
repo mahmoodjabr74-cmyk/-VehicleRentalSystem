@@ -1,0 +1,127 @@
+digraph UML {
+    rankdir=BT;
+    graph [fontname="Helvetica", nodesep=0.5, ranksep=0.9, splines=true];
+    node [shape=plain, fontname="Helvetica", fontsize=10];
+    edge [fontname="Helvetica", fontsize=9];
+
+    Maintainable [label=<
+<table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#fff8dc">
+<tr><td><i>&laquo;interface&raquo;</i></td></tr>
+<tr><td><b>Maintainable</b></td></tr>
+<tr><td sides="T" align="left">+ performMaintenance(): void<br align="left"/>+ needsMaintenance(): boolean<br align="left"/></td></tr>
+</table>>];
+
+    Vehicle [label=<
+<table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#eef4ff">
+<tr><td><i>&laquo;abstract&raquo;</i></td></tr>
+<tr><td><b><i>Vehicle</i></b></td></tr>
+<tr><td sides="T" align="left">+ MIN_YEAR: int {final, static}<br align="left"/>- vehicleId: String {final}<br align="left"/>- brand: String<br align="left"/>- model: String<br align="left"/>- year: int<br align="left"/>- dailyPrice: double<br align="left"/>- available: boolean<br align="left"/>- maintenanceRequired: boolean<br align="left"/>- rentalsSinceService: int<br align="left"/></td></tr>
+<tr><td sides="T" align="left">+ Vehicle(id, brand, model, year, dailyPrice)<br align="left"/>+ <i>calculateRentalCost(days: int, withOptionalService: boolean): double</i><br align="left"/>+ calculateRentalCost(days: int): double<br align="left"/>+ <i>displayInfo(): void</i><br align="left"/>+ <i>getType(): String</i><br align="left"/>+ getOptionalService(): String<br align="left"/># baseCost(days: int): double<br align="left"/># basicInfo(): String<br align="left"/>+ markRented(): void<br align="left"/>+ markReturned(): void<br align="left"/>+ flagForMaintenance(): void<br align="left"/># resetServiceStatus(): void<br align="left"/>+ setDailyPrice(price: double): void<br align="left"/>+ getters...<br align="left"/></td></tr>
+</table>>];
+
+    Car [label=<
+<table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#eef4ff">
+<tr><td><b>Car</b></td></tr>
+<tr><td sides="T" align="left">+ INSURANCE_PER_DAY: double = 15 {final}<br align="left"/>- seats: int<br align="left"/>- transmission: Transmission<br align="left"/></td></tr>
+<tr><td sides="T" align="left">+ Car(id, brand, model, year, price, seats, transmission)<br align="left"/>+ Car(id, brand, model, year, price)<br align="left"/>+ calculateRentalCost(days, withInsurance): double<br align="left"/>+ getOptionalService(): String<br align="left"/>+ displayInfo(): void<br align="left"/>+ performMaintenance(): void<br align="left"/>+ needsMaintenance(): boolean<br align="left"/></td></tr>
+</table>>];
+
+    Motorcycle [label=<
+<table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#eef4ff">
+<tr><td><b>Motorcycle</b></td></tr>
+<tr><td sides="T" align="left">+ HELMET_PER_DAY: double = 5 {final}<br align="left"/>- engineCC: int<br align="left"/>- helmetIncluded: boolean<br align="left"/></td></tr>
+<tr><td sides="T" align="left">+ Motorcycle(id, brand, model, year, price, cc, helmet)<br align="left"/>+ Motorcycle(id, brand, model, year, price, cc)<br align="left"/>+ calculateRentalCost(days, withHelmet): double<br align="left"/>+ getOptionalService(): String<br align="left"/>+ displayInfo(): void<br align="left"/>+ performMaintenance(): void<br align="left"/>+ needsMaintenance(): boolean<br align="left"/></td></tr>
+</table>>];
+
+    Truck [label=<
+<table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#eef4ff">
+<tr><td><b>Truck</b></td></tr>
+<tr><td sides="T" align="left">+ SERVICE_FEE: double = 50 {final}<br align="left"/>- maxLoadTons: double<br align="left"/></td></tr>
+<tr><td sides="T" align="left">+ Truck(id, brand, model, year, price, maxLoadTons)<br align="left"/>+ calculateRentalCost(days, ignored): double<br align="left"/>+ displayInfo(): void<br align="left"/>+ performMaintenance(): void<br align="left"/>+ needsMaintenance(): boolean<br align="left"/></td></tr>
+</table>>];
+
+    Transmission [label=<
+<table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#f2f2f2">
+<tr><td><i>&laquo;enum&raquo;</i></td></tr>
+<tr><td><b>Transmission</b></td></tr>
+<tr><td sides="T" align="left">MANUAL<br align="left"/>AUTOMATIC<br align="left"/></td></tr>
+</table>>];
+
+    Customer [label=<
+<table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#eefaee">
+<tr><td><b>Customer</b></td></tr>
+<tr><td sides="T" align="left">- customerId: String {final}<br align="left"/>- fullName: String<br align="left"/>- phone: String<br align="left"/>- email: String<br align="left"/>- licenseNumber: String {final}<br align="left"/>- rentals: ArrayList&lt;Rental&gt;<br align="left"/></td></tr>
+<tr><td sides="T" align="left">+ Customer(id, name, phone, email, license)<br align="left"/>+ Customer(id, name, phone, license)<br align="left"/>+ addRental(r: Rental): void<br align="left"/>+ getRentals(): List&lt;Rental&gt;<br align="left"/>+ getCurrentVehicles(): List&lt;Vehicle&gt;<br align="left"/>+ setPhone(phone: String): void<br align="left"/>+ setEmail(email: String): void<br align="left"/>+ displayInfo(): void<br align="left"/></td></tr>
+</table>>];
+
+    Rental [label=<
+<table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#eefaee">
+<tr><td><b>Rental</b></td></tr>
+<tr><td sides="T" align="left"><u>- nextNumber: int</u><br align="left"/>- rentalId: String {final}<br align="left"/>- customer: Customer {final}<br align="left"/>- vehicle: Vehicle {final}<br align="left"/>- days: int<br align="left"/>- optionalService: boolean<br align="left"/>- totalCost: double<br align="left"/>- status: RentalStatus<br align="left"/></td></tr>
+<tr><td sides="T" align="left">+ Rental(customer, vehicle, days, optionalService)<br align="left"/>+ Rental(customer, vehicle, days)<br align="left"/>+ complete(): void<br align="left"/>+ isActive(): boolean<br align="left"/>+ getters...<br align="left"/></td></tr>
+</table>>];
+
+    RentalStatus [label=<
+<table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#f2f2f2">
+<tr><td><i>&laquo;enum&raquo;</i></td></tr>
+<tr><td><b>RentalStatus</b></td></tr>
+<tr><td sides="T" align="left">ACTIVE<br align="left"/>COMPLETED<br align="left"/></td></tr>
+</table>>];
+
+    RentalSystem [label=<
+<table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#fdeeee">
+<tr><td><b>RentalSystem</b></td></tr>
+<tr><td sides="T" align="left">- vehicles: ArrayList&lt;Vehicle&gt;<br align="left"/>- customers: ArrayList&lt;Customer&gt;<br align="left"/>- rentals: ArrayList&lt;Rental&gt;<br align="left"/></td></tr>
+<tr><td sides="T" align="left">+ addVehicle(v: Vehicle): void<br align="left"/>+ findVehicle(id: String): Vehicle<br align="left"/>+ findVehicles(keyword: String): List&lt;Vehicle&gt;<br align="left"/>+ findVehicles(maxPrice: double): List&lt;Vehicle&gt;<br align="left"/>+ getAvailableVehicles() / getRentedVehicles()<br align="left"/>+ updateDailyPrice(id, price): void<br align="left"/>+ registerCustomer(c: Customer): void<br align="left"/>+ findCustomer(id): Customer<br align="left"/>+ updateCustomerPhone / updateCustomerEmail<br align="left"/>+ checkRentable(id): Vehicle<br align="left"/>+ rentVehicle(cId, vId, days, extra): Rental<br align="left"/>+ rentVehicle(cId, vId, days): Rental<br align="left"/>+ returnVehicle(rentalId): Rental<br align="left"/>+ getRentalHistory(cId): List&lt;Rental&gt;<br align="left"/>+ getTotalRevenue(): double<br align="left"/>+ flagForMaintenance(id): void<br align="left"/>+ getVehiclesNeedingMaintenance(): List&lt;Maintainable&gt;<br align="left"/>+ performMaintenance(id): void<br align="left"/></td></tr>
+</table>>];
+
+    RentalException [label=<
+<table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#fdeeee">
+<tr><td><b>RentalException</b></td></tr>
+<tr><td sides="T" align="left">+ RentalException(message: String)<br align="left"/></td></tr>
+</table>>];
+
+    Exception [label=<
+<table border="1" cellborder="0" cellspacing="0" cellpadding="3"><tr><td>java.lang.Exception</td></tr></table>>];
+
+    ConsoleMenu [label=<
+<table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#f5eefa">
+<tr><td><b>ConsoleMenu</b></td></tr>
+<tr><td sides="T" align="left">- system: RentalSystem {final}<br align="left"/>- input: InputHelper {final}<br align="left"/></td></tr>
+<tr><td sides="T" align="left">+ run(): void<br align="left"/>- handleChoice(choice: int): boolean<br align="left"/>- addVehicle(), rentVehicle(), returnVehicle() ...<br align="left"/></td></tr>
+</table>>];
+
+    InputHelper [label=<
+<table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#f5eefa">
+<tr><td><b>InputHelper</b></td></tr>
+<tr><td sides="T" align="left">- scanner: Scanner<br align="left"/></td></tr>
+<tr><td sides="T" align="left">+ readText(prompt): String<br align="left"/>+ readInt(prompt): int<br align="left"/>+ readInt(prompt, min, max): int<br align="left"/>+ readDouble(prompt): double<br align="left"/>+ readYesNo(prompt): boolean<br align="left"/></td></tr>
+</table>>];
+
+    Main [label=<
+<table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#f5eefa">
+<tr><td><b>Main</b></td></tr>
+<tr><td sides="T" align="left"><u>+ main(args: String[]): void</u><br align="left"/></td></tr>
+</table>>];
+
+    Car -> Vehicle [arrowhead=empty];
+    Motorcycle -> Vehicle [arrowhead=empty];
+    Truck -> Vehicle [arrowhead=empty];
+    RentalException -> Exception [arrowhead=empty];
+
+    Car -> Maintainable [arrowhead=empty, style=dashed];
+    Motorcycle -> Maintainable [arrowhead=empty, style=dashed];
+    Truck -> Maintainable [arrowhead=empty, style=dashed];
+
+    Car -> Transmission [arrowhead=vee, label="1"];
+    Rental -> Customer [dir=none, taillabel="0..*", headlabel="1", label="rented by"];
+    Rental -> Vehicle [arrowhead=vee, taillabel="0..*", headlabel="1"];
+    Rental -> RentalStatus [arrowhead=vee, label="1"];
+    RentalSystem -> Vehicle [arrowhead=diamond, dir=back, arrowtail=diamond, taillabel="1", headlabel="0..*"];
+    RentalSystem -> Customer [arrowhead=diamond, dir=back, arrowtail=diamond, taillabel="1", headlabel="0..*"];
+    RentalSystem -> Rental [arrowhead=diamond, dir=back, arrowtail=diamond, taillabel="1", headlabel="0..*"];
+    RentalSystem -> RentalException [style=dashed, arrowhead=vee, label="throws"];
+    ConsoleMenu -> RentalSystem [arrowhead=vee, label="1"];
+    ConsoleMenu -> InputHelper [arrowhead=vee, label="1"];
+    Main -> ConsoleMenu [style=dashed, arrowhead=vee, label="creates"];
+}
